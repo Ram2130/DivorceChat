@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Restart - Ankitha, 30</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      font-size: 24px;
+      border-bottom: 1px solid #ddd;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      font-size: 18px;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 50px;
+      height: 80vh;
+    }
+    .photo {
+      width: 45%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&grayscale=true');
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(100%);
+      border-radius: 10px;
+    }
+    .info {
+      width: 50%;
+      padding: 20px;
+    }
+    .info h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    .about {
+      margin-bottom: 30px;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    .fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .field {
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .field.selected {
+      background-color: #e0f9e0;
+      border-color: #6cc070;
+    }
+    .field::after {
+      content: "✔";
+      margin-left: 8px;
+      font-size: 14px;
+      color: green;
+      display: none;
+    }
+    .field.selected::after {
+      display: inline;
+    }
+    .nav-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 30px;
+    }
+    .nav-buttons button {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 24px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+    .nav-buttons button:hover {
+      background: #333;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Restart ❤️</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Interests</a>
+    <a href="#">Instagram</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="photo"></div>
+  <div class="info">
+    <h1>Ankitha, 30</h1>
+    <div class="about">
+      I'm a passionate soul who believes that every sunset holds a promise of a new beginning.
+      From sipping coffee on rainy mornings to losing myself in books that feel like old friends, I find magic in life's quiet moments.
+      I’m someone who loves meaningful conversations, laughing until it hurts, and exploring hidden cafes in the city.
+      Family, loyalty, and kindness are the values I live by.
+      I dream of traveling the world one story at a time and meeting someone who is excited about the journey ahead.
+    </div>
+    <div class="fields">
+      <div class="field selected">Creative Writing</div>
+      <div class="field">Travel Blogging</div>
+      <div class="field">Flamenco Dance</div>
+      <div class="field">Vegan Cooking</div>
+      <div class="field">Sustainability</div>
+      <div class="field">Candle Making</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-buttons">
+  <button>&lt;</button>
+  <button>&gt;</button>
+</div>
+
+<footer>
+  © 2025 Restart | Instagram | LinkedIn
+</footer>
+
+</body>
+</html>
