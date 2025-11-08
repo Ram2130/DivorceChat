@@ -1,11 +1,19 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+import { registerRoutes } from "./routes.ts";
+import { setupVite, serveStatic, log } from "./vite.ts";
+ import cors from 'cors';
+
+import { connectDB } from './config/db.ts';
+
+connectDB();
+
+
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(cors());
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -36,6 +44,8 @@ app.use((req, res, next) => {
   next();
 });
 
+ 
+
 (async () => {
   const server = await registerRoutes(app);
 
@@ -60,11 +70,17 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  // server.listen({
+  //   port,
+  //   host: "0.0.0.0",
+  //   reusePort: true,
+  // }, () => {
+  //   log(`serving on port ${port}`);
+  // });
+
+
+server.listen(port, 'localhost', () => {
+  log(`serving on http://localhost:${port}` ,);
+});
+
 })();

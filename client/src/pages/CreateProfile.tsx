@@ -26,7 +26,9 @@ import { Loader2 } from "lucide-react";
 
 // Extend the insert profile schema with additional validation
 const createProfileSchema = z.object({
-  displayName: z.string().min(2, "Name must be at least 2 characters"),
+   email: z.string().min(2, "email must be at least 2 characters"),
+  password: z.string().min(8, "password must be at least 8 characters"),
+  Name: z.string().min(2, "Name must be at least 2 characters"),
   age: z.coerce.number().min(18, "You must be at least 18 years old").max(120, "Invalid age"),
   location: z.string().min(3, "Please provide your location"),
   bio: z.string().min(50, "Bio should be at least 50 characters").max(500, "Bio cannot exceed 500 characters"),
@@ -52,7 +54,9 @@ const CreateProfile = () => {
   const form = useForm<CreateProfileFormValues>({
     resolver: zodResolver(createProfileSchema),
     defaultValues: {
-      displayName: "",
+      email:"",
+      password:"",
+      Name: "",
       age: undefined,
       location: "",
       bio: "",
@@ -72,6 +76,8 @@ const CreateProfile = () => {
       };
       
       const res = await apiRequest("POST", "/api/profiles", profileData);
+       
+
       return res.json();
     },
     onSuccess: (data) => {
@@ -79,6 +85,7 @@ const CreateProfile = () => {
         title: "Profile created!",
         description: "Your profile has been created successfully.",
       });
+      localStorage.setItem('token',data.token);
       navigate(`/profile/${data.id}`);
     },
     onError: (error) => {
@@ -140,7 +147,7 @@ const CreateProfile = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
-                    name="displayName"
+                    name="Name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Display Name</FormLabel>
@@ -166,7 +173,32 @@ const CreateProfile = () => {
                     )}
                   />
                 </div>
-                
+                 <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>password</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 <FormField
                   control={form.control}
                   name="location"

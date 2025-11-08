@@ -7,9 +7,9 @@ interface ProfileCardProps {
   compact?: boolean;
 }
 
-const ProfileCard = ({ profile, compact = false }: ProfileCardProps) => {
+const ProfileCard = ({   id,profile, compact = false }: ProfileCardProps) => {
   return (
-    <Link href={`/profile/${profile.id}`}>
+    <Link href={`/profile/${id}`}>
       <Card className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200 cursor-pointer h-full">
         <div className={`${compact ? 'h-48' : 'h-64'} overflow-hidden`}>
           <img 
@@ -25,7 +25,7 @@ const ProfileCard = ({ profile, compact = false }: ProfileCardProps) => {
           <p className="text-gray-600 text-sm">{profile.location}</p>
           
           <div className="mt-2 flex flex-wrap gap-1">
-            {profile.interests.slice(0, 3).map((interest, index) => (
+            {profile.interests?.slice(0, 3).map((interest, index) => (
               <span 
                 key={index} 
                 className="text-xs bg-gray-100 px-2 py-0.5 rounded-full"
@@ -33,7 +33,7 @@ const ProfileCard = ({ profile, compact = false }: ProfileCardProps) => {
                 {interest}
               </span>
             ))}
-            {profile.interests.length > 3 && (
+            {profile.interests?.length > 3 && (
               <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">
                 +{profile.interests.length - 3} more
               </span>

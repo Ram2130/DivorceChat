@@ -4,11 +4,31 @@ import { Button } from "@/components/ui/button";
 import ProfileCard from "@/components/ProfileCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Heart } from "lucide-react";
-
+import axios from 'axios';
+import { callApi } from "@/lib/utils";
+import { useEffect, useState } from "react";
+  
+import { useProfileContext } from "@/ContextApi/contextApi";
 const Home = () => {
-  const { data: profiles, isLoading } = useQuery({
-    queryKey: ['/api/profiles'],
-  });
+
+    const {fetchData} = useProfileContext();
+ 
+   const [profiles,setProfiles] = useState([]);
+  const ProfileData=async()=>{
+    const Data = await axios.get('http://localhost:5000/api/profiles')
+    //const response =  await callApi('get','/profiles');
+  // console.log(response);
+    console.log('API Response:', Data.data);
+    setProfiles(Data.data)
+  }
+  
+ useEffect(()=>{
+  ProfileData();
+  fetchData();
+ },[])
+  // const { data: profiles, isLoading } = useQuery({
+  //   queryKey: ['/api/profiles'],
+  // });
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -72,7 +92,7 @@ const Home = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {isLoading && (
+          {/* {isLoading && (
             Array(4).fill(0).map((_, i) => (
               <div key={i} className="bg-white rounded-xl shadow-sm overflow-hidden">
                 <Skeleton className="h-48 w-full" />
@@ -86,10 +106,10 @@ const Home = () => {
                 </div>
               </div>
             ))
-          )}
+          )} */}
           
           {profiles && profiles.slice(0, 4).map((profile) => (
-            <ProfileCard key={profile.id} profile={profile} compact />
+            <ProfileCard key={profile._id} profile={profile.data} compact />
           ))}
         </div>
         

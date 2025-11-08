@@ -4,7 +4,7 @@ import {
   contactRequests, type ContactRequest, type InsertContactRequest,
   matches, type Match, type InsertMatch,
   predefinedInterests
-} from "@shared/schema";
+} from "../shared/schema.ts";
 
 // Storage interface for database operations
 export interface IStorage {

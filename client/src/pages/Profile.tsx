@@ -5,36 +5,65 @@ import { Skeleton } from "@/components/ui/skeleton";
 import InterestTag from "@/components/InterestTag";
 import ContactForm from "@/components/ContactForm";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useProfileContext } from "@/ContextApi/contextApi";
+import axios from 'axios'
 const Profile = () => {
   const { id } = useParams();
   const profileId = parseInt(id);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-
+   
   // Mock user ID for now (in a real app, this would come from auth)
   const currentUserId = 1;
+ const [profile,setProfile] = useState();
+ const [ isLoading,setIsLoading] = useState(true);
+  // const { data: profiles } = useQuery({
+  //   queryKey: ['/api/profiles'],
+  // });
 
-  const { data: profiles } = useQuery({
-    queryKey: ['/api/profiles'],
-  });
+  // const { data: profile, isLoading } = useQuery({
+  //   queryKey: [`/api/profiles/${profileId}`],
+  // });
+  const fetchProfileData = async (id)=>{
+      console.log("api is calling ");
+      try {
+      // let query =`?title=${filterData.title}&page=${filterData.page}`; 
+      // console.log(filterData.title);
+     // const resp =  await callApi("get",`/Profiles${query}`);
+      const resp = await axios.get(`http://localhost:5000/api/profiles/${id}`)
+      console.log(resp.data)
+      setProfile(resp.data.data);
+      return resp.data
+     
+  }catch(e){
+  
+    console.log(e.message+"Error detecting in Api")
+  }
+    }
 
-  const { data: profile, isLoading } = useQuery({
-    queryKey: [`/api/profiles/${profileId}`],
-  });
+
+  useEffect( () => {
+     if(isLoading)
+    { const Userprofile =  fetchProfileData(id)
+   //  console.log(Userprofile)
+     setIsLoading(false);
+    }
+   
+  }, [isLoading])
+  
 
   // Find the current profile's index in the profiles list
-  const currentIndex = profiles?.findIndex(p => p.id === profileId) || 0;
-  const prevProfileId = currentIndex > 0 ? profiles?.[currentIndex - 1]?.id : null;
-  const nextProfileId = currentIndex < (profiles?.length || 0) - 1 ? profiles?.[currentIndex + 1]?.id : null;
+  // const currentIndex = profiles?.findIndex(p => p.id === profileId) || 0;
+  // const prevProfileId = currentIndex > 0 ? profiles?.[currentIndex - 1]?.id : null;
+  // const nextProfileId = currentIndex < (profiles?.length || 0) - 1 ? profiles?.[currentIndex + 1]?.id : null;
 
-  const toggleInterest = (interest: string) => {
-    if (selectedInterests.includes(interest)) {
-      setSelectedInterests(selectedInterests.filter(i => i !== interest));
-    } else {
-      setSelectedInterests([...selectedInterests, interest]);
-    }
-  };
+  // const toggleInterest = (interest: string) => {
+  //   if (selectedInterests.includes(interest)) {
+  //     setSelectedInterests(selectedInterests.filter(i => i !== interest));
+  //   } else {
+  //     setSelectedInterests([...selectedInterests, interest]);
+  //   }first
+  // };
 
   if (isLoading) {
     return (
@@ -80,7 +109,7 @@ const Profile = () => {
     <div className="container mx-auto px-4 py-8 md:py-12">
       <div className="relative">
         {/* Profile Navigation Buttons */}
-        <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center pointer-events-none z-10">
+        {/* <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center pointer-events-none z-10">
           {prevProfileId && (
             <Link href={`/profile/${prevProfileId}`}>
               <button className="profile-nav-button pointer-events-auto ml-2 md:ml-4" aria-label="Previous profile">
@@ -95,7 +124,7 @@ const Profile = () => {
               </button>
             </Link>
           )}
-        </div>
+        </div> */}
         
         {/* Profile Content */}
         <div className="flex flex-col md:flex-row md:space-x-8 md:items-start bg-white rounded-xl shadow-sm overflow-hidden">
@@ -109,7 +138,7 @@ const Profile = () => {
             
             {/* Profile ID Badge */}
             <div className="absolute bottom-4 left-4 bg-white bg-opacity-80 rounded-lg px-3 py-1 text-sm font-medium shadow-sm">
-              ID: {profile.id.toString().padStart(4, '0')}
+              {/* ID: {profile.id.toString().padStart(4, '0')} */}
             </div>
           </div>
           
@@ -148,7 +177,7 @@ const Profile = () => {
             <div className="mt-6">
               <h3 className="text-lg font-semibold mb-3">Interests</h3>
               <div className="flex flex-wrap gap-2">
-                {profile.interests.map((interest, index) => (
+                {profile.interests?.map((interest, index) => (
                   <InterestTag 
                     key={index} 
                     name={interest} 
