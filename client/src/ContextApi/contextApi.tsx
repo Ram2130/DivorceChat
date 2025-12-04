@@ -19,7 +19,7 @@ export const ProfileProvider = ({ children}) => {
     // let query =`?title=${filterData.title}&page=${filterData.page}`; 
     // console.log(filterData.title);
    // const resp =  await callApi("get",`/Profiles${query}`);
-    const resp = await axios.get('http://localhost:5000/api/profiles')
+    const resp = await axios.get('https://heydivo.com/api/profiles')
     console.log(resp.data)
     setProfileData(resp.data);
     console.log(ProfileData)
@@ -36,7 +36,7 @@ const fetchProfileData = async (id)=>{
     // let query =`?title=${filterData.title}&page=${filterData.page}`; 
     // console.log(filterData.title);
    // const resp =  await callApi("get",`/Profiles${query}`);
-    const resp = await axios.get(`http://localhost:5000/api/profiles/${id}`)
+    const resp = await axios.get(`https://heydivo.com/api/profiles/${id}`)
     console.log(resp.data)
     setProfile(resp.data);
     return resp.data
