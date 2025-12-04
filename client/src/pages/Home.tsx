@@ -15,7 +15,7 @@ const Home = () => {
  
    const [profiles,setProfiles] = useState([]);
   const ProfileData=async()=>{
-    const Data = await axios.get('http://localhost:5000/api/profiles')
+    const Data = await axios.get('https://heydivo.com/api/profiles')
     //const response =  await callApi('get','/profiles');
   // console.log(response);
     console.log('API Response:', Data.data);
